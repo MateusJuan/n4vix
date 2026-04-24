@@ -1,100 +1,334 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exclusão de conta – N4vix</title>
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exclusão de conta – N4vix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="img/500.png" type="image/x-icon">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-        --background: #0B0F1A;
-        --surface: #121826;
-        --surfaceAlt: #1E293B;
-        --primary: #4FA3E3;
-        --primaryLight: #6BB7F0;
-        --primaryDark: #2E6FD6;
-        --accent: #8A4BE8;
-        --accentLight: #A07BFF;
-        --text: #F1F5F9;
-        --textMuted: #8A9BB8;
-        --border: #1E293B;
+      --background:   #0B0F1A;
+      --surface:      #121826;
+      --surfaceAlt:   #1E293B;
+      --primary:      #4FA3E3;
+      --primaryLight: #6BB7F0;
+      --primaryDark:  #2E6FD6;
+      --accent:       #8A4BE8;
+      --accentLight:  #A07BFF;
+      --success:      #22c55e;
+      --danger:       #ef4444;
+      --text:         #F1F5F9;
+      --textMuted:    #8A9BB8;
+      --border:       #1E293B;
     }
+
+    html { scroll-behavior: smooth; }
+
     body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: var(--background);
-        color: var(--text);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
+      background: var(--background);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: rgba(46,111,214,0.12); top: -150px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 350px; height: 350px; background: rgba(138,75,232,0.10); bottom: 10%; right: -80px; animation-delay: -4s; }
+    @keyframes float {
+      from { transform: translateY(0) scale(1); }
+      to   { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(11,15,26,0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(30,41,59,0.6);
+    }
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primaryDark), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--textMuted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primaryLight); }
+    .nav-links a.active { color: var(--primaryLight); }
+
+    /* PAGE */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--textMuted);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      align-self: flex-start;
+      max-width: 700px;
+      width: 100%;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--primaryLight); }
+
     .container {
-        max-width: 700px;
-        background: var(--surface);
-        padding: 40px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      max-width: 700px;
+      width: 100%;
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 40px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #f87171;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
     h1 {
-        background: linear-gradient(
-        90deg,
-        var(--primaryDark),
-        var(--accent)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 2rem;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--primaryDark), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
     }
-    p {
-        color: var(--textMuted);
-        line-height: 1.6;
+
+    .intro {
+      color: var(--textMuted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
     }
-    ol {
-        line-height: 1.8;
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 1.8rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .footer {
-        margin-top: 30px;
-        font-size: 14px;
-        color: var(--textMuted);
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 2px;
+      flex-shrink: 0;
     }
-    .highlight {
-        color: var(--primaryLight);
+
+    ol, ul { padding-left: 1.4rem; }
+    ol { list-style: decimal; }
+    ul { list-style: disc; }
+    ol li, ul li {
+      color: var(--textMuted);
+      line-height: 1.8;
+      font-size: 0.93rem;
+      margin-bottom: 0.2rem;
     }
-    </style>
-    </head>
-    <body>
-        <div class="container">
-        <h1>Exclusão de conta – N4vix</h1>
-        <p>
-        Os usuários do aplicativo <span class="highlight">N4vix</span> podem excluir sua conta e todos os dados associados diretamente pelo aplicativo.
-        </p>
-        <h2>Como excluir sua conta</h2>
-            <ol>
-                <li>Abrir o aplicativo N4vix</li>
-                <li>Clicar no menu lateral </li>
-                <li>Acessar a tela <strong>Perfil</strong> clicando no seu nome de usuário</li>
-                <li>Tocar na opção <strong>Excluir conta</strong> na "zona de perigo"</li>
-                <li>Confirmar a exclusão clicando em "Excluir"</li>
-            </ol>
-        <h2>O que acontece após a exclusão</h2>
-        <p>
-        Após a confirmação:
-        </p>
-            <ul>
-                <li>Todos os dados da conta são excluídos permanentemente</li>
-                <li>Informações de login são removidas</li>
-                <li>Dados associados ao uso do aplicativo são apagados automaticamente</li>
-                <li>A exclusão ocorre imediatamente após a confirmação</li>
-            </ul>
-            <div class="footer">
-            Caso precise de suporte adicional, entre em contato com o suporte do aplicativo N4vix:<br><br>
-            <strong>
-            <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=navix.suporte1@gmail.com" style="color: var(--primaryLight); text-decoration: none;">
-            navix.suporte1@gmail.com
-            </a>
-            </strong>
-            </div>
-        </div>
-    </body>
+    ol li strong, ul li strong { color: var(--text); font-weight: 600; }
+
+    .danger-box {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .danger-box ul { margin: 0; }
+    .danger-box li { color: #fca5a5; font-size: 0.88rem; }
+    .danger-box li strong { color: #fca5a5; }
+
+    .contact-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--textMuted);
+      line-height: 1.7;
+    }
+    .contact-footer a {
+      color: var(--primaryLight);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .contact-footer a:hover { color: var(--accentLight); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .footer-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primaryDark), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--textMuted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--primaryLight); }
+    .footer-copy { font-size: 0.75rem; color: #3d4f6a; }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .container { padding: 1.5rem; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <nav>
+    <a href="./index.html" class="nav-logo">N4vix</a>
+    <div class="nav-links">
+      <a href="./index.html#stats">Números</a>
+      <a href="./index.html#features">Recursos</a>
+      <a href="./politica_de_privacidade.html">Privacidade</a>
+      <a href="./excluir_conta.html" class="active">Excluir conta</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <a href="./index.html" class="back-link">
+      ← Voltar ao início
+    </a>
+
+    <div class="container">
+      <div class="page-badge">🗑️ Conta &amp; dados</div>
+      <h1>Exclusão de conta</h1>
+      <p class="intro">
+        Os usuários do aplicativo <strong style="color:var(--primaryLight)">N4vix</strong> podem excluir sua conta e todos os dados associados diretamente pelo aplicativo, a qualquer momento.
+      </p>
+
+      <h2>Como excluir sua conta</h2>
+      <ol>
+        <li>Abra o aplicativo <strong>N4vix</strong></li>
+        <li>Toque no <strong>menu lateral</strong></li>
+        <li>Acesse a tela <strong>Perfil</strong> clicando no seu nome de usuário</li>
+        <li>Toque em <strong>Excluir conta</strong> na seção "Zona de perigo"</li>
+        <li>Confirme tocando em <strong>Excluir</strong></li>
+      </ol>
+
+      <h2>O que acontece após a exclusão</h2>
+      <div class="danger-box">
+        <ul>
+          <li>Todos os dados da conta são excluídos <strong>permanentemente</strong></li>
+          <li>Informações de login são removidas imediatamente</li>
+          <li>Dados associados ao uso do aplicativo são apagados automaticamente</li>
+          <li>A exclusão ocorre no momento da confirmação — <strong>não é reversível</strong></li>
+        </ul>
+      </div>
+
+      <div class="contact-footer">
+        Precisa de ajuda adicional? Entre em contato com o suporte do N4vix:<br>
+        <a href="mailto:navix.suporte1@gmail.com">navix.suporte1@gmail.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">N4vix</div>
+    <div class="footer-links">
+      <a href="./politica_de_privacidade.html">Política de Privacidade</a>
+      <a href="./excluir_conta.html">Exclusão de Conta</a>
+      <a href="mailto:navix.suporte1@gmail.com">Suporte</a>
+    </div>
+    <div class="footer-copy">© 2026 N4vix. Rotas inteligentes para entregadores. Em conformidade com a LGPD.</div>
+  </footer>
+
+</body>
 </html>
