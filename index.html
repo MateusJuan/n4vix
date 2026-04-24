@@ -355,7 +355,14 @@
       transition: border-color 0.2s;
     }
     .feature-card:hover { border-color: rgba(79,163,227,0.4); }
-    .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      background: rgba(79,163,227,0.1);
+      border: 1px solid rgba(79,163,227,0.15);
+    }
     .feature-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
     .feature-desc { font-size: 0.87rem; color: var(--textMuted); line-height: 1.55; }
 
@@ -453,35 +460,33 @@
   <section class="stats-section" id="stats">
     <p class="section-label reveal">Comunidade em crescimento</p>
     <h2 class="section-title reveal">Números reais,<br>em tempo real</h2>
-    <p class="section-subtitle reveal">Dados atualizados diretamente da nossa base de dados.</p>
+    <p class="section-subtitle reveal">Dados atualizados diretamente da nossa base de produção.</p>
 
     <div class="stats-grid">
 
       <!-- Usuários totais -->
       <div class="stat-card reveal">
-        <div class="stat-icon">👥</div>
+        <div class="stat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
         <div class="stat-number" id="totalUsuarios"><span class="shimmer"></span></div>
         <div class="stat-label">Usuários cadastrados</div>
         <div class="stat-desc">Total de contas criadas no N4vix desde o lançamento.</div>
-        <div class="sub-stats" id="subUsuarios" style="display:none">
-          <div class="sub-stat">
-            <span class="sub-stat-val" id="usuariosFree">–</span>
-            <span class="sub-stat-lbl">Gratuitos</span>
-          </div>
-          <div class="sub-stat accent">
-            <span class="sub-stat-val" id="usuariosPagos">–</span>
-            <span class="sub-stat-lbl">Assinantes</span>
-          </div>
-          <div class="sub-stat">
-            <span class="sub-stat-val" id="usuariosTesters">–</span>
-            <span class="sub-stat-lbl">Testers</span>
-          </div>
-        </div>
       </div>
 
       <!-- Endereços -->
       <div class="stat-card accent-card reveal">
-        <div class="stat-icon">📍</div>
+        <div class="stat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accentLight)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
         <div class="stat-number" id="totalEnderecos"><span class="shimmer"></span></div>
         <div class="stat-label">Endereços na base</div>
         <div class="stat-desc">Pontos de entrega mapeados e disponíveis para roteamento inteligente.</div>
@@ -489,7 +494,11 @@
 
       <!-- Planos ativos -->
       <div class="stat-card reveal" id="cardPlanos">
-        <div class="stat-icon">✨</div>
+        <div class="stat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 22 12 12 22 2 12"/>
+          </svg>
+        </div>
         <div class="stat-number" id="totalAssinantes"><span class="shimmer"></span></div>
         <div class="stat-label">Assinantes ativos</div>
         <div class="stat-desc">Entregadores com plano ativo aproveitando rotas otimizadas todo dia.</div>
@@ -507,32 +516,57 @@
 
     <div class="features-grid">
       <div class="feature-card reveal">
-        <div class="feature-icon">🗺️</div>
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+          </svg>
+        </div>
         <div class="feature-title">Roteamento automático</div>
         <div class="feature-desc">Calcule a sequência ideal de entregas em segundos. Menos km rodados, mais entregas por dia.</div>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">⚡</div>
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
         <div class="feature-title">Velocidade real</div>
         <div class="feature-desc">Rota calculada offline via OSRM — sem travar, mesmo em áreas de sinal fraco.</div>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">📋</div>
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
         <div class="feature-title">Gestão de pedidos</div>
         <div class="feature-desc">Importe endereços rapidamente, organize prioridades e acompanhe o progresso das entregas.</div>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">🔒</div>
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
         <div class="feature-title">Segurança e privacidade</div>
         <div class="feature-desc">Dados criptografados em trânsito e em repouso. Compatível com a LGPD desde o dia um.</div>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">💳</div>
+        <div class="feature-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primaryLight)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
         <div class="feature-title">Planos acessíveis</div>
         <div class="feature-desc">Mensal. Pagamento via cartão com a segurança da Stripe.</div>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon"><img src="img/br.png" alt="Brasil" style="width:2rem;height:2rem;object-fit:contain;" />
+        <div class="feature-icon">
+          <img src="img/br.png" alt="Brasil" style="width:26px;height:26px;object-fit:contain;" />
+        </div>
         <div class="feature-title">100% brasileiro</div>
         <div class="feature-desc">Desenvolvido no Brasil, pensado para a realidade das ruas brasileiras.</div>
       </div>
@@ -594,12 +628,6 @@
         const elU = document.getElementById('totalUsuarios');
         elU.innerHTML = '<span class="count-up">0</span>';
         animateCount(elU.querySelector('.count-up'), data.totalUsuarios);
-
-        /* Sub-stats usuários */
-        document.getElementById('usuariosFree').textContent   = (data.usuariosFree   ?? 0).toLocaleString('pt-BR');
-        document.getElementById('usuariosPagos').textContent  = (data.usuariosPagos  ?? 0).toLocaleString('pt-BR');
-        document.getElementById('usuariosTesters').textContent = (data.usuariosTesters ?? 0).toLocaleString('pt-BR');
-        document.getElementById('subUsuarios').style.display = 'flex';
 
         /* Total endereços */
         const elE = document.getElementById('totalEnderecos');
